@@ -20,7 +20,33 @@ class Server {
 
     routes() {
         this.app.get('/saludo', ( req, res ) => {
-            res.send('Hola Mundo!')
+            res.json({
+                'mensaje': 'get Hola Mundo!'
+            })
+        })
+        
+        this.app.put('/saludo', ( req, res ) => {
+            res.json({
+                'mensaje': 'put Hola Mundo!'
+            })
+        })
+        
+        this.app.post('/saludo', ( req, res ) => {
+            res.json({
+                'mensaje': 'post Hola Mundo!'
+            })
+        })
+        
+        this.app.delete('/saludo', ( req, res ) => {
+            res.json({
+                'mensaje': 'delete Hola Mundo!'
+            })
+        })
+        
+        this.app.patch('/saludo', ( req, res ) => {
+            res.json({
+                'mensaje': 'patch Hola Mundo!'
+            })
         })
     }
 
