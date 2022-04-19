@@ -13,8 +13,12 @@ const usersPatch = ( req, res ) => {
 }
 
 const usersPost = ( req, res ) => {
+    const { nombre, edad } = req.body;
+
     res.json({
-        'mensaje': 'post API Users'
+        'mensaje': 'post API Users',
+        nombre,
+        edad
     })
 }
 
