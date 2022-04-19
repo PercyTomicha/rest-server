@@ -5,14 +5,16 @@ const User = require('../models/user')
 const usersGet = async ( req = request, res ) => {
     const { desde = 0, limite = 5 } = req.query
     const query = { state : true }
-    const users = await User.find( query )
-                    .skip( Number( desde ) )
-                    .limit( Number( limite ) )
-    
-    const total = await User.countDocuments( query )
+
+    const [ total, users ] = await Promise.all([
+        User.countDocuments( query ),
+        User.find( query )
+            .skip( Number( desde ) )
+            .limit( Number( limite ) )
+    ])
 
     res.json({
-        'mensaje': 'get API Users',
+        mensaje: 'get API Users',
         total,
         users
     })
@@ -20,7 +22,7 @@ const usersGet = async ( req = request, res ) => {
 
 const usersPatch = ( req, res ) => {
     res.json({
-        'mensaje': 'patch API Users'
+        mensaje: 'patch API Users'
     })
 }
 
@@ -37,7 +39,7 @@ const usersPost = async ( req, res = response ) => {
     await user.save()
 
     res.json({
-        'mensaje': 'post API Users',
+        mensaje: 'post API Users',
         user
     })
 }
@@ -55,14 +57,14 @@ const usersPut = async ( req, res = response ) => {
     const user = await User.findByIdAndUpdate( id, data )
 
     res.json({
-        'mensaje': 'put API Users',
+        mensaje: 'put API Users',
         user
     })
 }
 
 const usersDelete = ( req, res ) => {
     res.json({
-        'mensaje': 'delete API Users'
+        mensaje: 'delete API Users'
     })
 }
 
