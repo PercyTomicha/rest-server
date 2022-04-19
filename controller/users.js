@@ -4,13 +4,16 @@ const User = require('../models/user')
 
 const usersGet = async ( req = request, res ) => {
     const { desde = 0, limite = 5 } = req.query
-    const users = await User.find()
+    const query = { state : true }
+    const users = await User.find( query )
                     .skip( Number( desde ) )
                     .limit( Number( limite ) )
+    
+    const total = await User.countDocuments( query )
 
     res.json({
         'mensaje': 'get API Users',
-        limite,
+        total,
         users
     })
 }
