@@ -21,11 +21,18 @@ const usersPatch = ( req, res ) => {
     })
 }
 
-const usersPost = async ( req, res ) => {
+const usersPost = async ( req, res = response ) => {
+
     const { name, email, password, role} = req.body;
     const user = new User( { name, email, password, role} )
 
     // Verificar si el correo existe
+    const existeCorreo = await User.findOne({ email })
+    if( existeCorreo ) {
+        return res.status(400).json({
+            mensaje: 'El correo ya está registrado'
+        })
+    }
 
     // Encriptar la contraseña
     const salt = bcryptjs.genSaltSync()
