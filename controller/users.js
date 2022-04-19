@@ -65,8 +65,11 @@ const usersPut = async ( req, res = response ) => {
 const usersDelete = async ( req, res ) => {
     const { id } = req.params;
 
-    // Borrando Físicamente
-    const user = await User.findByIdAndDelete( id )
+    // Borrado Físico
+    // const user = await User.findByIdAndDelete( id )
+
+    // Borrado Lógico
+    const user = await User.findByIdAndUpdate( id, { state: false } )
 
     res.json({
         mensaje: 'delete API Users',
