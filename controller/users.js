@@ -2,16 +2,16 @@ const { response, request } = require('express')
 const bcryptjs = require('bcryptjs')
 const User = require('../models/user')
 
-const usersGet = ( req = request, res ) => {
-    const { q, nombre = 'Sin Nombre', apiKey, page = 1, limit } = req.query
+const usersGet = async ( req = request, res ) => {
+    const { desde = 0, limite = 5 } = req.query
+    const users = await User.find()
+                    .skip( Number( desde ) )
+                    .limit( Number( limite ) )
 
     res.json({
         'mensaje': 'get API Users',
-        q,
-        nombre,
-        apiKey,
-        page,
-        limit
+        limite,
+        users
     })
 }
 
