@@ -39,12 +39,21 @@ const usersPost = async ( req, res = response ) => {
     })
 }
 
-const usersPut = ( req, res ) => {
+const usersPut = async ( req, res = response ) => {
     const { id } = req.params;
+    const { _id, email, google, password, ...data } = req.body;
+
+    // Encriptar la contraseña
+    if( password ){
+        const salt = bcryptjs.genSaltSync()
+        data.password = bcryptjs.hashSync( password, salt )
+    }
+
+    const user = await User.findByIdAndUpdate( id, data )
 
     res.json({
         'mensaje': 'put API Users',
-        id
+        user
     })
 }
 
