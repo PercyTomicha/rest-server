@@ -20,9 +20,14 @@ const usersGet = async ( req = request, res ) => {
     })
 }
 
-const usersPatch = ( req, res ) => {
+const usersPatch = async ( req, res ) => {
+    const { id } = req.params;
+
+    const user = await User.findById( id )
+
     res.json({
-        mensaje: 'patch API Users'
+        mensaje: 'patch API Users',
+        user
     })
 }
 

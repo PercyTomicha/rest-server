@@ -15,7 +15,12 @@ const router = Router()
 
 router.get('/', usersGet)
 
-router.patch('/', usersPatch)
+router.patch('/:id', [
+    check( 'id', 'No es un ID válido' ).isMongoId(),
+    check( 'id' ).custom( existeID ),
+    validarCampos
+]
+, usersPatch)
 
 router.post('/', [
     check( 'name', 'El nombre es obligatorio' ).not().isEmpty(),
