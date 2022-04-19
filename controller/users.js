@@ -1,8 +1,15 @@
-const { response } = require('express')
+const { response, request } = require('express')
 
-const usersGet = ( req, res ) => {
+const usersGet = ( req = request, res ) => {
+    const { q, nombre = 'Sin Nombre', apiKey, page = 1, limit } = req.query
+
     res.json({
-        'mensaje': 'get API Users'
+        'mensaje': 'get API Users',
+        q,
+        nombre,
+        apiKey,
+        page,
+        limit
     })
 }
 
@@ -23,8 +30,11 @@ const usersPost = ( req, res ) => {
 }
 
 const usersPut = ( req, res ) => {
+    const { id } = req.params;
+
     res.json({
-        'mensaje': 'put API Users'
+        'mensaje': 'put API Users',
+        id
     })
 }
 
