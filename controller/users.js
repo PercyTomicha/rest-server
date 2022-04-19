@@ -62,9 +62,15 @@ const usersPut = async ( req, res = response ) => {
     })
 }
 
-const usersDelete = ( req, res ) => {
+const usersDelete = async ( req, res ) => {
+    const { id } = req.params;
+
+    // Borrando Físicamente
+    const user = await User.findByIdAndDelete( id )
+
     res.json({
-        mensaje: 'delete API Users'
+        mensaje: 'delete API Users',
+        user
     })
 }
 
